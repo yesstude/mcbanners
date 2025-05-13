@@ -1,7 +1,8 @@
 import { DyeColor } from "./dye-color";
 import { Pattern } from "./pattern";
 
-export const BANNER_SIZE = [20, 40];
+export const BANNER_FACE_OFFSET = [1, 1];
+export const BANNER_FACE_SIZE = [20, 40];
 export type Layer = [Pattern, DyeColor];
 
 export class Banner {

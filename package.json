@@ -36,5 +36,8 @@
     "@types/bun": "^1.1.10",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "prettier-plugin-unused-imports-configurable": "^1.14.3"
+  },
+  "dependencies": {
+    "jimp": "^1.6.0"
   }
 }
