@@ -13,6 +13,7 @@
   },
   "scripts": {
     "build": "bun run build.ts",
+    "prettier": "prettier -w ./**/*",
     "prepublishOnly": "bun run build"
   },
   "files": [
@@ -32,6 +33,8 @@
   "author": "yesstude <71387747+yesstude@users.noreply.github.com>",
   "devDependencies": {
     "bun-plugin-dts": "^0.3.0",
-    "@types/bun": "^1.1.10"
+    "@types/bun": "^1.1.10",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "prettier-plugin-unused-imports-configurable": "^1.14.3"
   }
 }
