@@ -42,3 +42,8 @@ export enum Pattern {
   FLOW = "minecraft:flow",
   GUSTER = "minecraft:guster",
 }
+
+export function getPatternUrl(pattern?: Pattern) {
+  const name = pattern ? pattern.split(":")[1] : "base";
+  return new URL(`../assets/${name}.png`, import.meta.url);
+}
