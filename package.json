@@ -16,6 +16,12 @@
     "prettier": "prettier -w ./**/*",
     "prepublishOnly": "bun run build"
   },
+  "prettier": {
+    "plugins": [
+      "@trivago/prettier-plugin-sort-imports",
+      "prettier-plugin-unused-imports-configurable"
+    ]
+  },
   "files": [
     "dist",
     "assets"

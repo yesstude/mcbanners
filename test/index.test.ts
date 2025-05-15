@@ -16,19 +16,29 @@ describe("get pattern url", () => {
 });
 
 describe("test banners", () => {
-  it("creeper", async () => {
+  const exampleBanner = new Banner(DyeColor.LIME)
+    .add(Pattern.STRIPE_CENTER, DyeColor.RED)
+    .add(Pattern.BORDER, DyeColor.LIME)
+    .add(Pattern.HALF_HORIZONTAL, DyeColor.LIME)
+    .add(Pattern.STRIPE_MIDDLE, DyeColor.PINK)
+    .add(Pattern.CREEPER, DyeColor.BLACK)
+    .add(Pattern.CURLY_BORDER, DyeColor.LIME);
+
+  it("toString", () => {
+    expect(exampleBanner.toString()).toMatch(
+      "L:cs-R:bo-L:hh-L:ms-P:cre-BL:cbo-L",
+    );
+  });
+
+  it("fromString", () => {
     expect(
-      hash(
-        await renderBannerFace(
-          new Banner(DyeColor.LIME)
-            .add(Pattern.STRIPE_CENTER, DyeColor.RED)
-            .add(Pattern.BORDER, DyeColor.LIME)
-            .add(Pattern.HALF_HORIZONTAL, DyeColor.LIME)
-            .add(Pattern.STRIPE_MIDDLE, DyeColor.PINK)
-            .add(Pattern.CREEPER, DyeColor.BLACK)
-            .add(Pattern.CURLY_BORDER, DyeColor.LIME),
-        ),
-      ),
-    ).toBe(11097594993981714374n);
+      Banner.fromString("L:cs-R:bo-L:hh-L:ms-P:cre-BL:cbo-L").toJSON(),
+    ).toBe(exampleBanner.toJSON());
+  });
+
+  it("creeper", async () => {
+    expect(hash(await renderBannerFace(exampleBanner))).toBe(
+      11097594993981714374n,
+    );
   });
 });

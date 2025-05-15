@@ -39,3 +39,34 @@ const hexcodes: { [key in DyeColor]: string } = {
 export function dyeColorToHex(color: DyeColor) {
   return hexcodes[color];
 }
+
+const abbreviations: { [key in DyeColor]: string } = {
+  WHITE: "W",
+  ORANGE: "O",
+  MAGENTA: "M",
+  LIGHT_BLUE: "LB",
+  YELLOW: "Y",
+  LIME: "L",
+  PINK: "P",
+  GRAY: "G",
+  LIGHT_GRAY: "LG",
+  CYAN: "C",
+  PURPLE: "PU",
+  BLUE: "B",
+  BROWN: "BR",
+  GREEN: "GR",
+  RED: "R",
+  BLACK: "BL",
+};
+
+export function dyeColorToAbbreviation(color: DyeColor) {
+  return abbreviations[color];
+}
+export function dyeColorFromAbbreviation(abbr: string) {
+  for (const [key, value] of Object.entries(abbreviations)) {
+    if (value === abbr) {
+      return key as DyeColor;
+    }
+  }
+  return null;
+}

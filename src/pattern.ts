@@ -47,3 +47,60 @@ export function getPatternUrl(pattern?: Pattern) {
   const name = pattern ? pattern.split(":")[1] : "base";
   return new URL(`../assets/${name}.png`, import.meta.url);
 }
+
+const abbreviations: { [key in Pattern]: string } = {
+  [Pattern.SQUARE_BOTTOM_LEFT]: "bl",
+  [Pattern.SQUARE_BOTTOM_RIGHT]: "br",
+  [Pattern.SQUARE_TOP_LEFT]: "tl",
+  [Pattern.SQUARE_TOP_RIGHT]: "tr",
+  [Pattern.STRIPE_BOTTOM]: "bs",
+  [Pattern.STRIPE_TOP]: "ts",
+  [Pattern.STRIPE_LEFT]: "ls",
+  [Pattern.STRIPE_RIGHT]: "rs",
+  [Pattern.STRIPE_CENTER]: "cs",
+  [Pattern.STRIPE_MIDDLE]: "ms",
+  [Pattern.STRIPE_DOWNRIGHT]: "drs",
+  [Pattern.STRIPE_DOWNLEFT]: "dls",
+  [Pattern.SMALL_STRIPES]: "ss",
+  [Pattern.CROSS]: "cr",
+  [Pattern.STRAIGHT_CROSS]: "sc",
+  [Pattern.TRIANGLE_BOTTOM]: "bt",
+  [Pattern.TRIANGLE_TOP]: "tt",
+  [Pattern.TRIANGLES_BOTTOM]: "bts",
+  [Pattern.TRIANGLES_TOP]: "tts",
+  [Pattern.DIAGONAL_LEFT]: "dl",
+  [Pattern.DIAGONAL_UP_RIGHT]: "dur",
+  [Pattern.DIAGONAL_UP_LEFT]: "dul",
+  [Pattern.DIAGONAL_RIGHT]: "dr",
+  [Pattern.CIRCLE]: "ci",
+  [Pattern.RHOMBUS]: "rh",
+  [Pattern.HALF_VERTICAL]: "vh",
+  [Pattern.HALF_HORIZONTAL]: "hh",
+  [Pattern.HALF_VERTICAL_RIGHT]: "vr",
+  [Pattern.HALF_HORIZONTAL_BOTTOM]: "hb",
+  [Pattern.BORDER]: "bo",
+  [Pattern.CURLY_BORDER]: "cbo",
+  [Pattern.CREEPER]: "cre",
+  [Pattern.GRADIENT]: "gra",
+  [Pattern.GRADIENT_UP]: "gru",
+  [Pattern.BRICKS]: "bri",
+  [Pattern.SKULL]: "sku",
+  [Pattern.FLOWER]: "flo",
+  [Pattern.MOJANG]: "moj",
+  [Pattern.GLOBE]: "glo",
+  [Pattern.PIGLIN]: "pig",
+  [Pattern.FLOW]: "flw",
+  [Pattern.GUSTER]: "gus",
+};
+
+export function patternToAbbreviation(pattern: Pattern) {
+  return abbreviations[pattern];
+}
+export function patternFromAbbreviation(abbr: string) {
+  for (const [key, value] of Object.entries(abbreviations)) {
+    if (value === abbr) {
+      return key as Pattern;
+    }
+  }
+  return null;
+}
