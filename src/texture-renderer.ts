@@ -10,9 +10,24 @@ import { Banner, BANNER_FACE_OFFSET, BANNER_FACE_SIZE } from "./banner";
 import { getPatternUrl, Pattern } from "./pattern";
 import { dyeColorToHex } from "./dye-color";
 
-export async function renderBannerTexture(banner: Banner) {
-  const url = getPatternUrl();
-  let image = await Jimp.read(url.toString());
+export type LoadAssetFunction = (
+  name?: Pattern,
+) => Promise<string | Buffer | ArrayBuffer>;
+export const defaultRenderingOptions = {
+  overrideLoadAssetFunction: (async (pattern) => {
+    return getPatternUrl(pattern).toString();
+  }) as LoadAssetFunction,
+};
+export type RenderingOptions = Partial<typeof defaultRenderingOptions>;
+
+export async function renderBannerTexture(
+  banner: Banner,
+  options?: RenderingOptions,
+) {
+  const opts = { ...defaultRenderingOptions, ...options };
+
+  const url = await opts.overrideLoadAssetFunction();
+  let image = await Jimp.read(url);
   let color = new Jimp({
     width: image.width,
     height: image.height,
@@ -21,7 +36,9 @@ export async function renderBannerTexture(banner: Banner) {
   image.composite(color, 0, 0, { mode: BlendMode.MULTIPLY });
 
   for (const layer of banner.layers) {
-    let pattern = await Jimp.read(getPatternUrl(layer[0]).toString());
+    let pattern = await Jimp.read(
+      await opts.overrideLoadAssetFunction(layer[0]),
+    );
     color = new Jimp({
       width: pattern.width,
       height: pattern.height,
@@ -47,8 +64,12 @@ function genMask(bitmap: Bitmap, doContrast = true) {
   return mask.bitmap;
 }
 
-export async function renderBannerFace(banner: Banner, scale: number = 1) {
-  const texture = await renderBannerTexture(banner);
+export async function renderBannerFace(
+  banner: Banner,
+  scale: number = 1,
+  options?: RenderingOptions,
+) {
+  const texture = await renderBannerTexture(banner, options);
   const img = await Jimp.fromBuffer(texture);
   img.crop({
     x: BANNER_FACE_OFFSET[0],
